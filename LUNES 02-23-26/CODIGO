@@ -16,20 +16,18 @@ aut_muerte DATE
 );
 
 INSERT INTO tbl_autor VALUES
-(101,'Pérez','1972-03-12',NULL),
-(102,'Martínez','1985-07-21',NULL),
-(103,'Gómez','1969-11-02','2019-05-10'),
-(104,'Fernández','1990-01-18',NULL),
-(105,'Torres','1978-04-25',NULL),
-(106,'Ramírez','1982-09-14','2020-06-01'),
-(107,'Castro','1975-12-30',NULL),
-(108,'Vargas','1987-06-05',NULL),
-(109,'Ortega','1981-02-22',NULL),
-(110,'Navarro','1973-10-09','2017-08-19'),
-(111,'Rojas','1991-03-15',NULL),
-(112,'Suárez','1984-05-27',NULL),
-(113,'Moreno','1976-09-01',NULL),
-(114,'Ibarra','1989-07-11',NULL);
+(98,'Smith','1974-12-21','2018-07-21'),
+(123,'Taylor','1980-04-15',NULL),
+(234,'Medina','1977-06-21','2005-09-12'),
+(345,'Wilson','1975-08-29',NULL),
+(432,'Miller','1981-10-26',NULL),
+(456,'García','1978-09-27','2021-12-09'),
+(567,'Davis','1983-03-04','2010-03-28'),
+(678,'Silva','1986-02-02',NULL),
+(765,'López','1976-07-08',NULL),
+(789,'Rodríguez','1985-12-10',NULL),
+(890,'Brown','1982-11-17',NULL),
+(901,'Soto','1979-05-13','2015-11-05');
 
 -- =====================
 -- TABLA LIBROS
@@ -44,19 +42,18 @@ lib_diasPrestamo TINYINT
 );
 
 INSERT INTO tbl_libro VALUES
-(1000000001,'Sombras del Amanecer','novela',320,7),
-(1000000002,'La Ruta del Viento','aventura',280,5),
-(1000000003,'Secretos del Tiempo','misterio',410,7),
-(1000000004,'El Eco del Pasado','romance',190,3),
-(1000000005,'Guardianes de Cristal','fantasia',520,7),
-(1000000006,'Historias del Horizonte','cuento',210,4),
-(1000000007,'El Misterio del Lago','misterio',330,6),
-(1000000008,'Caminos Perdidos','novela',275,5),
-(1000000009,'La Torre del Destino','fantasia',480,7),
-(1000000010,'Susurros del Mar','romance',230,3),
-(1000000011,'Crónicas del Norte','historia',390,7),
-(1000000012,'El Código Escondido','misterio',305,6),
-(1000000013,'Relatos de Medianoche','cuento',180,4);
+(1111111111,'Libro de prueba','novela',200,7),
+(1234567890,'El Sueño de los Susurros','novela',275,7),
+(1357924680,'El Jardín de las Mariposas Perdidas','novela',536,7),
+(2468135790,'La Melodía de la Oscuridad','romance',189,3),
+(2718281828,'El Bosque de los Suspiros','novela',397,2),
+(3141592653,'El Secreto de las Estrellas Olvidadas','misterio',203,7),
+(5555555555,'La Última Llave del Destino','cuento',503,3),
+(8642097531,'El Reloj de Arena Infinito','novela',321,7),
+(8888888888,'La Ciudad de los Susurros','misterio',274,1),
+(9517530862,'Las Crónicas del Eco Silencioso','fantasía',448,7),
+(9876543210,'El Laberinto de los Recuerdos','cuento',412,7),
+(9999999999,'El Enigma de los Espejos Rotos','romance',156,3);
 
 -- =====================
 -- TABLA SOCIOS
@@ -71,21 +68,20 @@ soc_telefono VARCHAR(10)
 );
 
 INSERT INTO tbl_socio VALUES
-(1,'Camila','Pardo','Calle 10 #23-45','3001111111'),
-(2,'Mateo','Díaz','Carrera 5 #12-33','3012222222'),
-(3,'Valentina','Ríos','Av. Central 56','3023333333'),
-(4,'Santiago','Luna','Barrio Norte 22','3034444444'),
-(5,'Daniela','Mora','Calle del Sol 77','3045555555'),
-(6,'Sebastián','Cruz','Av. Libertad 11','3056666666'),
-(7,'Laura','Vega','Calle 9 #44','3067777777'),
-(8,'Andrés','Peña','Barrio Jardín 90','3078888888'),
-(9,'Paula','Gil','Av. del Río 12','3089999999'),
-(10,'Julián','Acosta','Calle 15 #66','3091111111'),
-(11,'Mariana','Salas','Urbanización Verde','3102222222'),
-(12,'Felipe','Campos','Calle 20 #88','3113333333'),
-(13,'Natalia','Carrillo','Barrio Centro','3124444444'),
-(14,'Tomás','Reyes','Calle 7 #54','3135555555'),
-(15,'Lucía','Santos','Av. Bolívar 100','3146666666');
+(1,'Ana','Ruiz','Nueva Dir 123','3001112233'),
+(2,'Andrés Felipe','Galindo Luna','Avenida del Sol 456','212345678'),
+(3,'Juan','González','Calle Principal 789','301234567'),
+(4,'María','Rodríguez','Carrera del Río 321','3012345678'),
+(5,'Pedro','Martínez','Calle del Bosque 654','1234567812'),
+(6,'Ana','López','Avenida Central 987','6123456781'),
+(7,'Carlos','Sánchez','Calle de la Luna 234','1123456781'),
+(8,'Laura','Ramírez','Carrera del Mar 567','1312345678'),
+(9,'Luis','Hernández','Avenida de la Montaña 890','6101234567'),
+(10,'Andrea','García','Calle del Sol 432','111234567'),
+(11,'Alejandro','Torres','Carrera del Oeste 765','491234567'),
+(12,'Sofía','Morales','Avenida del Mar 098','5512345678'),
+(13,'Carlos','Ruiz','Calle Falsa 123','3009998877'),
+(15,'Pedro','Picapiedra','Calle Rocosa 1','3001234567');
 
 -- =====================
 -- TABLA PRESTAMO
@@ -106,14 +102,14 @@ REFERENCES tbl_libro(lib_isbn)
 );
 
 INSERT INTO tbl_prestamo VALUES
-('P001','2026-03-01','2026-03-08',1,1000000001),
-('P002','2026-03-02','2026-03-07',2,1000000004),
-('P003','2026-03-03','2026-03-10',3,1000000005),
-('P004','2026-03-04','2026-03-09',4,1000000002),
-('P005','2026-03-05','2026-03-11',5,1000000003),
-('P006','2026-03-06','2026-03-12',6,1000000007),
-('P007','2026-03-07','2026-03-13',7,1000000009),
-('P008','2026-03-08','2026-03-15',8,1000000011);
+('PR001','2026-03-01','2026-03-08',1,1111111111),
+('PR002','2026-03-02','2026-03-09',2,1234567890),
+('PR003','2026-03-03','2026-03-10',3,1357924680),
+('PR004','2026-03-04','2026-03-11',4,2468135790),
+('PR005','2026-03-05','2026-03-12',5,2718281828),
+('PR006','2026-03-06','2026-03-13',6,3141592653),
+('PR007','2026-03-07','2026-03-14',7,5555555555),
+('PR008','2026-03-08','2026-03-15',8,8642097531);
 
 -- =====================
 -- TABLA TIPO AUTORES
@@ -134,20 +130,21 @@ REFERENCES tbl_libro(lib_isbn)
 );
 
 INSERT INTO tbl_tipoautores VALUES
-(1000000001,101,'Autor'),
-(1000000002,102,'Autor'),
-(1000000003,103,'Autor'),
-(1000000004,104,'Autor'),
-(1000000005,105,'Autor'),
-(1000000005,106,'Coautor'),
-(1000000006,107,'Autor'),
-(1000000007,108,'Autor'),
-(1000000008,109,'Autor'),
-(1000000009,110,'Autor'),
-(1000000010,111,'Autor'),
-(1000000011,112,'Autor'),
-(1000000012,113,'Autor'),
-(1000000013,114,'Autor');
+(1111111111,98,'Autor'),
+(1234567890,123,'Autor'),
+(1234567890,456,'Coautor'),
+(1357924680,123,'Traductor'),
+(2468135790,234,'Autor'),
+(2718281828,789,'Traductor'),
+(3141592653,901,'Autor'),
+(5555555555,678,'Autor'),
+(8642097531,345,'Autor'),
+(8888888888,234,'Autor'),
+(8888888888,345,'Coautor'),
+(9517530862,432,'Traductor'),
+(9517530862,890,'Autor'),
+(9876543210,567,'Autor'),
+(9999999999,98,'Autor');
 
 -- =====================
 -- TABLAS AUDITORIA
@@ -162,6 +159,12 @@ audi_fecha DATETIME,
 audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
+
+INSERT INTO audi_libro
+(lib_codigo_audi,titulo_anterior,titulo_nuevo,audi_fecha,audi_usuario,audi_accion)
+VALUES
+(1234567890,'Sueño Susurros','El Sueño de los Susurros','2026-03-10 10:00:00','admin','UPDATE'),
+(2468135790,'Melodia','La Melodía de la Oscuridad','2026-03-11 12:00:00','admin','UPDATE');
 
 CREATE TABLE audi_socio(
 id_audi INT AUTO_INCREMENT PRIMARY KEY,
@@ -179,6 +182,13 @@ audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
 
+INSERT INTO audi_socio
+(socNumero_audi,socNombre_anterior,socApellido_anterior,socDireccion_anterior,socTelefono_anterior,
+socNombre_nuevo,socApellido_nuevo,socDireccion_nuevo,socTelefono_nuevo,
+audi_fechaModificacion,audi_usuario,audi_accion)
+VALUES
+(1,'Ana','Ruiz','Dir vieja','3000000000','Ana','Ruiz','Nueva Dir 123','3001112233','2026-03-10 11:00:00','admin','UPDATE');
+
 CREATE TABLE audi_autor(
 id_audi INT AUTO_INCREMENT PRIMARY KEY,
 aut_codigo INT,
@@ -192,6 +202,14 @@ audi_fecha DATETIME,
 audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
+
+INSERT INTO audi_autor
+(aut_codigo,aut_apellido_anterior,aut_apellido_nuevo,
+aut_nacimiento_anterior,aut_nacimiento_nuevo,
+aut_muerte_anterior,aut_muerte_nuevo,
+audi_fecha,audi_usuario,audi_accion)
+VALUES
+(123,'Tailor','Taylor','1980-04-15','1980-04-15',NULL,NULL,'2026-03-10 09:00:00','admin','UPDATE');
 
 -- =====================
 -- VISTAS
