@@ -69,19 +69,15 @@ soc_telefono VARCHAR(10)
 
 INSERT INTO tbl_socio VALUES
 (1,'Ana','Ruiz','Nueva Dir 123','3001112233'),
-(2,'Andrés Felipe','Galindo Luna','Avenida del Sol 456','212345678'),
-(3,'Juan','González','Calle Principal 789','301234567'),
-(4,'María','Rodríguez','Carrera del Río 321','3012345678'),
-(5,'Pedro','Martínez','Calle del Bosque 654','1234567812'),
-(6,'Ana','López','Avenida Central 987','6123456781'),
-(7,'Carlos','Sánchez','Calle de la Luna 234','1123456781'),
-(8,'Laura','Ramírez','Carrera del Mar 567','1312345678'),
-(9,'Luis','Hernández','Avenida de la Montaña 890','6101234567'),
-(10,'Andrea','García','Calle del Sol 432','111234567'),
-(11,'Alejandro','Torres','Carrera del Oeste 765','491234567'),
-(12,'Sofía','Morales','Avenida del Mar 098','5512345678'),
-(13,'Carlos','Ruiz','Calle Falsa 123','3009998877'),
-(15,'Pedro','Picapiedra','Calle Rocosa 1','3001234567');
+(2,'Andrés','Galindo','Avenida del Sol','3002223344'),
+(3,'Juan','González','Calle Principal','301234567'),
+(4,'María','Rodríguez','Carrera del Río','3012345678'),
+(5,'Pedro','Martínez','Calle del Bosque','1234567812'),
+(6,'Ana','López','Avenida Central','6123456781'),
+(7,'Carlos','Sánchez','Calle de la Luna','1123456781'),
+(8,'Laura','Ramírez','Carrera del Mar','1312345678'),
+(9,'Luis','Hernández','Avenida Montaña','6101234567'),
+(10,'Andrea','García','Calle del Sol','111234567');
 
 -- =====================
 -- TABLA PRESTAMO
@@ -105,11 +101,7 @@ INSERT INTO tbl_prestamo VALUES
 ('PR001','2026-03-01','2026-03-08',1,1111111111),
 ('PR002','2026-03-02','2026-03-09',2,1234567890),
 ('PR003','2026-03-03','2026-03-10',3,1357924680),
-('PR004','2026-03-04','2026-03-11',4,2468135790),
-('PR005','2026-03-05','2026-03-12',5,2718281828),
-('PR006','2026-03-06','2026-03-13',6,3141592653),
-('PR007','2026-03-07','2026-03-14',7,5555555555),
-('PR008','2026-03-08','2026-03-15',8,8642097531);
+('PR004','2026-03-04','2026-03-11',4,2468135790);
 
 -- =====================
 -- TABLA TIPO AUTORES
@@ -133,18 +125,9 @@ INSERT INTO tbl_tipoautores VALUES
 (1111111111,98,'Autor'),
 (1234567890,123,'Autor'),
 (1234567890,456,'Coautor'),
-(1357924680,123,'Traductor'),
 (2468135790,234,'Autor'),
-(2718281828,789,'Traductor'),
 (3141592653,901,'Autor'),
-(5555555555,678,'Autor'),
-(8642097531,345,'Autor'),
-(8888888888,234,'Autor'),
-(8888888888,345,'Coautor'),
-(9517530862,432,'Traductor'),
-(9517530862,890,'Autor'),
-(9876543210,567,'Autor'),
-(9999999999,98,'Autor');
+(8642097531,345,'Autor');
 
 -- =====================
 -- TABLAS AUDITORIA
@@ -159,12 +142,6 @@ audi_fecha DATETIME,
 audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
-
-INSERT INTO audi_libro
-(lib_codigo_audi,titulo_anterior,titulo_nuevo,audi_fecha,audi_usuario,audi_accion)
-VALUES
-(1234567890,'Sueño Susurros','El Sueño de los Susurros','2026-03-10 10:00:00','admin','UPDATE'),
-(2468135790,'Melodia','La Melodía de la Oscuridad','2026-03-11 12:00:00','admin','UPDATE');
 
 CREATE TABLE audi_socio(
 id_audi INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,13 +159,6 @@ audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
 
-INSERT INTO audi_socio
-(socNumero_audi,socNombre_anterior,socApellido_anterior,socDireccion_anterior,socTelefono_anterior,
-socNombre_nuevo,socApellido_nuevo,socDireccion_nuevo,socTelefono_nuevo,
-audi_fechaModificacion,audi_usuario,audi_accion)
-VALUES
-(1,'Ana','Ruiz','Dir vieja','3000000000','Ana','Ruiz','Nueva Dir 123','3001112233','2026-03-10 11:00:00','admin','UPDATE');
-
 CREATE TABLE audi_autor(
 id_audi INT AUTO_INCREMENT PRIMARY KEY,
 aut_codigo INT,
@@ -202,14 +172,6 @@ audi_fecha DATETIME,
 audi_usuario VARCHAR(50),
 audi_accion VARCHAR(20)
 );
-
-INSERT INTO audi_autor
-(aut_codigo,aut_apellido_anterior,aut_apellido_nuevo,
-aut_nacimiento_anterior,aut_nacimiento_nuevo,
-aut_muerte_anterior,aut_muerte_nuevo,
-audi_fecha,audi_usuario,audi_accion)
-VALUES
-(123,'Tailor','Taylor','1980-04-15','1980-04-15',NULL,NULL,'2026-03-10 09:00:00','admin','UPDATE');
 
 -- =====================
 -- VISTAS
@@ -234,6 +196,94 @@ p.pres_fechaDevolucion
 FROM tbl_prestamo p
 JOIN tbl_socio s ON p.soc_copiaNumero = s.soc_numero
 JOIN tbl_libro l ON p.lib_copiaISBN = l.lib_isbn;
+
+-- =====================
+-- TRIGGERS
+-- =====================
+
+DELIMITER $$
+
+CREATE TRIGGER trg_update_libro
+AFTER UPDATE ON tbl_libro
+FOR EACH ROW
+BEGIN
+INSERT INTO audi_libro
+(lib_codigo_audi,titulo_anterior,titulo_nuevo,audi_fecha,audi_usuario,audi_accion)
+VALUES
+(OLD.lib_isbn, OLD.lib_titulo, NEW.lib_titulo, NOW(), USER(), 'UPDATE');
+END$$
+
+CREATE TRIGGER trg_update_socio
+AFTER UPDATE ON tbl_socio
+FOR EACH ROW
+BEGIN
+INSERT INTO audi_socio
+VALUES
+(NULL,
+OLD.soc_numero,
+OLD.soc_nombre,
+OLD.soc_apellido,
+OLD.soc_direccion,
+OLD.soc_telefono,
+NEW.soc_nombre,
+NEW.soc_apellido,
+NEW.soc_direccion,
+NEW.soc_telefono,
+NOW(),
+USER(),
+'UPDATE');
+END$$
+
+CREATE TRIGGER trg_update_autor
+AFTER UPDATE ON tbl_autor
+FOR EACH ROW
+BEGIN
+INSERT INTO audi_autor
+VALUES
+(NULL,
+OLD.aut_codigo,
+OLD.aut_apellido,
+NEW.aut_apellido,
+OLD.aut_nacimiento,
+NEW.aut_nacimiento,
+OLD.aut_muerte,
+NEW.aut_muerte,
+NOW(),
+USER(),
+'UPDATE');
+END$$
+
+DELIMITER ;
+
+-- =====================
+-- PROCEDIMIENTOS
+-- =====================
+
+DELIMITER $$
+
+CREATE PROCEDURE ver_libros()
+BEGIN
+SELECT * FROM tbl_libro;
+END$$
+
+CREATE PROCEDURE ver_socios()
+BEGIN
+SELECT * FROM tbl_socio;
+END$$
+
+CREATE PROCEDURE registrar_prestamo(
+IN idPrestamo VARCHAR(20),
+IN fechaPrestamo DATE,
+IN fechaDevolucion DATE,
+IN socio INT,
+IN libro BIGINT
+)
+BEGIN
+INSERT INTO tbl_prestamo
+VALUES(idPrestamo,fechaPrestamo,fechaDevolucion,socio,libro);
+END$$
+
+DELIMITER ;
 
 -- =====================
 -- EVENTO
